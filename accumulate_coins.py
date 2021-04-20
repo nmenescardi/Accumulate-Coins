@@ -45,7 +45,7 @@ class AccumulateCoins:
                 self.client.futures_account_transfer(
                     asset="USDT", amount=value, type=2, timestamp=2348273489823
                 )
-                print("Balance transfer succesful !!!")
+                self.logger.info("Balance transfer succesful !!!")
             except BinanceAPIException as error:
                 self.logger.error("There was an API error: %s", error)
 
