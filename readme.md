@@ -1,0 +1,1 @@
+Python script to transfer funds from the Binance futures wallet into spot and accumulate coins.
