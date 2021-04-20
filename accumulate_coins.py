@@ -1,6 +1,8 @@
 import os
+
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
+
 from logger.app_logger import AppLogger
 
 
