@@ -1,0 +1,6 @@
+*.pyc
+*.env
+*.txt
+*.log
+/old_scripts
+local-workflow.sh
