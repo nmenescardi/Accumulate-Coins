@@ -4,6 +4,8 @@ from binance.exceptions import BinanceAPIException  # type: ignore
 
 from client.client import Client
 from logger.app_logger import AppLogger
+from wallets.futures import Futures as FuturesWallet
+from wallets.spot import Spot as SpotWallet
 
 
 class AccumulateCoins:
@@ -12,32 +14,17 @@ class AccumulateCoins:
     def __init__(self):
         self.client = Client().get()
         self.logger = AppLogger().get()
-
-    def _get_usdt_futures_balance(self):
-        details = self.client.futures_account_balance()
-        for i in details:
-            if i["asset"] == "USDT":
-                return i["balance"]
-        return 0
-
-    def _get_usdt_spot_balance(self):
-        details = self.client.get_account()
-        balance_details = details["balances"]
-        for i in balance_details:
-            if i["asset"] == "USDT":
-                return i["free"]
-        return 0
+        self.futures_wallet = FuturesWallet()
+        self.spot_wallet = SpotWallet()
 
     def _print_balance(self):
-        self.logger.info("Spot Balance in USDT is: %s", self._get_usdt_spot_balance())
-        self.logger.info(
-            "Futures Balance in USDT is: %s", self._get_usdt_futures_balance()
-        )
+        self.futures_wallet.print_balance()
+        self.spot_wallet.print_balance()
 
     def _get_value(self):
         value = input("Enter the value to transfer from Futures to spot wallet: ")
 
-        if value > self._get_usdt_futures_balance():
+        if value > self.futures_wallet.get_balance():
             self.logger.warning("Insufficient balance, Enter the values again.")
             self._get_value()
         else:

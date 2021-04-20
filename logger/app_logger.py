@@ -6,7 +6,7 @@ from helpers.singleton import singleton
 
 
 @singleton
-class AppLogger:  # pylint: disable=too-few-public-methods
+class AppLogger:
     """Main Logger class to construct and retrieve the logger as a singleton object"""
 
     def __init__(self):

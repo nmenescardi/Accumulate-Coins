@@ -4,7 +4,10 @@ import os
 
 from binance.client import Client as BinanceClient  # type: ignore
 
+from helpers.singleton import singleton
 
+
+@singleton
 class Client:
     """Main module class."""
 
