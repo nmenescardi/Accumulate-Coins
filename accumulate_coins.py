@@ -1,9 +1,8 @@
 """Script for transfering funds from the Binance futures wallets into spot and accumulate coins."""
-import os
 
-from binance.client import Client  # type: ignore
 from binance.exceptions import BinanceAPIException  # type: ignore
 
+from client.client import Client
 from logger.app_logger import AppLogger
 
 
@@ -11,7 +10,7 @@ class AccumulateCoins:
     """ Main class to control the process """
 
     def __init__(self):
-        self.client = Client(os.getenv("BINANCE_API"), os.getenv("BINANCE_SECRET"))
+        self.client = Client().get()
         self.logger = AppLogger().get()
 
     def _get_usdt_futures_balance(self):
