@@ -24,7 +24,9 @@ class AccumulateCoins:
 
     def print_balance(self):
         self.logger.info("Spot Balance in USDT is: %s", self.get_usdt_spot_balance())
-        self.logger.info("Futures Balance in USDT is: %s", self.get_usdt_futures_balance())
+        self.logger.info(
+            "Futures Balance in USDT is: %s", self.get_usdt_futures_balance()
+        )
 
     def get_value(self):
         value = input("Enter the value to transfer from Futures to spot wallet: ")
@@ -39,7 +41,7 @@ class AccumulateCoins:
                 )
                 print("Balance transfer succesful !!!")
             except BinanceAPIException as e:
-                self.logger.error('There was an API error: %s', e)
+                self.logger.error("There was an API error: %s", e)
 
     def run(self):
         self.print_balance()
