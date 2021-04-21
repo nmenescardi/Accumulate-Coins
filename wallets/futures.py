@@ -19,16 +19,17 @@ class Futures(AbstractWallet):
         self.logger.info("Futures Balance in USDT is: %s", self.get_balance())
 
     def transfer_to_spot(self):
+        """Perfor a tx from futures to spot"""
+
         amount = self.settings["tx_amount"]
         self.logger.info("Amount to transfer %s", amount)
 
         if amount > self.get_balance():
             self.logger.warning("Insufficient balance.")
-            return
         else:
             try:
                 self.client.futures_account_transfer(
-                    asset="USDT", amount=amount, type=2, timestamp=2348273489823
+                    asset="USDT", amount=amount, type=2
                 )
                 self.logger.info("Balance transfer succesful !!!")
             except BinanceAPIException as error:
