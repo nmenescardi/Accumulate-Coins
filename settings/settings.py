@@ -1,10 +1,12 @@
 """Module to handle default settings and script arguments"""
 import argparse
 
+from helpers.singleton import singleton
 from logger.app_logger import AppLogger
 from settings.config import default_config
 
 
+@singleton
 class Settings:
     """Main Settings class"""
 

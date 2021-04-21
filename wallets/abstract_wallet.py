@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from client.client import Client
 from logger.app_logger import AppLogger
+from settings.settings import Settings
 
 
 class AbstractWallet(ABC):
@@ -12,6 +13,7 @@ class AbstractWallet(ABC):
     def __init__(self):
         self.client = Client().get()
         self.logger = AppLogger().get()
+        self.settings = Settings().get()
 
     @abstractmethod
     def get_balance(self):
