@@ -12,7 +12,7 @@ class Spot(AbstractWallet):
         for i in balance_details:
             if i["asset"] == "USDT":
                 return i["free"]
-        return 0
+        return 0.0
 
     def print_balance(self):
         self.logger.info("Spot Balance in USDT is: %s", self.get_balance())
