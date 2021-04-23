@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 python-binance = "*"
+pandas = "*"
+numpy = "*"
+pandas_ta = "*"
 
 [dev-packages]
 
