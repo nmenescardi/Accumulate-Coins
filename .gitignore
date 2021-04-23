@@ -4,3 +4,4 @@
 *.log
 /old_scripts
 local-workflow.sh
+test__*.py
