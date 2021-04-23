@@ -2,7 +2,7 @@ from binance.enums import *
 from strategies.below_rsi import BelowRSI
 
 config = {
-    'BTC' : {
+    'BTCUSDT' : {
         BelowRSI : {
             'period': 14,
             'limit': 20,
