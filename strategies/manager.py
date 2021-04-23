@@ -1,7 +1,11 @@
 
 from strategies.config import config
 
+from binance.exceptions import BinanceAPIException
 from client.client import Client
+
+from wallets.futures import Futures as FuturesWallet
+from wallets.spot import Spot as SpotWallet
 
 import pandas as pd
 import numpy as np
@@ -9,8 +13,10 @@ import numpy as np
 
 class Manager:
     
-    def __init__(self):
+    def __init__(self, default_amount = 50):
         self.client = Client().get()
+        self.default_amount = default_amount
+        self.futures_wallet = FuturesWallet()
 
     def run(self):
 
@@ -20,6 +26,8 @@ class Manager:
             for strategy_class, params in strategies.items():
                     
                 timeframe = params['timeframe']
+                
+                amount  = params['amount'] or self.default_amount
 
                 max_period = 14 # TODO: calculate max_period
                 
@@ -27,8 +35,21 @@ class Manager:
                 
                 strategy = strategy_class(df=df,**params) 
                 if strategy.should_buy():
-                    #TODO perform api call to place the market order.
-                    break
+                    
+                    try:
+                        self.futures_wallet.transfer_to_spot(amount=amount)
+                        
+                        quantity = 0.03 #TODO amount / price
+                        order = self.client.order_market_buy(
+                            symbol=symbol,
+                            quantity=quantity
+                        )
+                        print(order)
+                    except BinanceAPIException as e:
+                        print(e)
+                    
+                    return
+                    
 
     def _get_df(self, symbol, interval):
         df = pd.DataFrame(columns= ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time'])

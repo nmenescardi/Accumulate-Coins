@@ -18,10 +18,10 @@ class Futures(AbstractWallet):
     def print_balance(self):
         self.logger.info("Futures Balance in USDT is: %s", self.get_balance())
 
-    def transfer_to_spot(self):
+    def transfer_to_spot(self, amount = None):
         """Perfor a tx from futures to spot"""
 
-        amount = self.settings["tx_amount"]
+        amount = amount or self.settings["tx_amount"]
         self.logger.info("Amount to transfer %s", amount)
 
         if amount > self.get_balance():
