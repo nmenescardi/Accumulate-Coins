@@ -17,7 +17,7 @@ class Dataframe:
     def get(self, symbol, interval, limit = 499):        
         candles = self._fetch_candles(symbol=symbol, interval=interval, limit=limit)
 
-        df = pd.DataFrame(columns= ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time'])
+        df = pd.DataFrame(columns= ['open_time', 'open', 'high', 'low', 'close', 'volume', 'close_time'])
 
         opentime, lopen, lhigh, llow, lclose, lvol, closetime = [], [], [], [], [], [], []
 
@@ -30,13 +30,13 @@ class Dataframe:
             lvol.append(candle[5])
             closetime.append(candle[6])
 
-        df['Open_time'] = opentime
-        df['Open'] = np.array(lopen).astype(np.float)
-        df['High'] = np.array(lhigh).astype(np.float)
-        df['Low'] = np.array(llow).astype(np.float)
-        df['Close'] = np.array(lclose).astype(np.float)
-        df['Volume'] = np.array(lvol).astype(np.float)
-        df['Close_time'] = closetime
+        df['open_time'] = opentime
+        df['open'] = np.array(lopen).astype(np.float)
+        df['high'] = np.array(lhigh).astype(np.float)
+        df['low'] = np.array(llow).astype(np.float)
+        df['close'] = np.array(lclose).astype(np.float)
+        df['volume'] = np.array(lvol).astype(np.float)
+        df['close_time'] = closetime
         return df
 
     def _fetch_candles(self, symbol, interval, limit):
