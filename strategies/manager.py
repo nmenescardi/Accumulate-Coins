@@ -20,16 +20,16 @@ class Manager:
 
         for symbol, strategies in config.items():
             print(symbol)
+            
+            self.dataframe_helper.flush_cache()
 
             for strategy_class, params in strategies.items():
 
                 timeframe = params['timeframe']
-
                 amount  = params['amount']
+                max_period  = params['max_period']
 
-                max_period = 14 # TODO: calculate max_period
-
-                df = self.dataframe_helper.get(symbol, timeframe)                          
+                df = self.dataframe_helper.get(symbol, timeframe, limit = max_period)
 
                 strategy = strategy_class(df=df,**params) 
 

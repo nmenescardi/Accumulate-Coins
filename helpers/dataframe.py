@@ -14,8 +14,8 @@ class Dataframe:
         self.client = Client().get()
         self.cached_dataframes = {}
 
-    def get(self, symbol, interval):        
-        candles = self._fetch_candles(symbol=symbol, interval=interval)
+    def get(self, symbol, interval, limit = 499):        
+        candles = self._fetch_candles(symbol=symbol, interval=interval, limit=limit)
 
         df = pd.DataFrame(columns= ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time'])
 
@@ -39,16 +39,18 @@ class Dataframe:
         df['Close_time'] = closetime
         return df
 
-
-    def _fetch_candles(self, symbol, interval):
-        cache_key = symbol + interval
+    def _fetch_candles(self, symbol, interval, limit):
+        cache_key = symbol + interval + str(limit)
         
         if cache_key in self.cached_dataframes:
             print('fetched from cache') #TODO: logger
             return self.cached_dataframes[ cache_key ]
-        
+
         else:
-            candles = self.client.get_klines(symbol=symbol, interval=interval)
+            candles = self.client.get_klines(symbol=symbol, interval=interval, limit=limit)
             print('fetched from client')
             self.cached_dataframes[ cache_key ] = candles
             return candles
+
+    def flush_cache(self):
+        self.cached_dataframes = {}
