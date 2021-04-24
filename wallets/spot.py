@@ -2,6 +2,8 @@
 
 from wallets.abstract_wallet import AbstractWallet
 
+from binance.exceptions import BinanceAPIException
+
 
 class Spot(AbstractWallet):
     """Spot wallet"""
@@ -16,3 +18,13 @@ class Spot(AbstractWallet):
 
     def print_balance(self):
         self.logger.info("Spot Balance in USDT is: %s", self.get_balance())
+
+    def place_order(self, symbol, quantity):
+        try:     
+            order = self.client.order_market_buy(
+                symbol=symbol,
+                quantity=quantity
+            )
+            print(order)
+        except BinanceAPIException as e:
+            print(e)
