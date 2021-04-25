@@ -1,4 +1,3 @@
-
 import time
 
 from client.client import Client
@@ -10,7 +9,8 @@ from wallets.spot import Spot as SpotWallet
 
 
 class Manager:
-    
+    """ Manages the process to check a strategy list for each pair declared on config """
+
     def __init__(self):
         self.client = Client().get()
         self.futures_wallet = FuturesWallet()
@@ -19,6 +19,7 @@ class Manager:
         self.logger = AppLogger().get()
 
     def run(self):
+        """ Main entry point to handle the process """
 
         while True:
             for symbol, strategies in config.items():
@@ -27,30 +28,41 @@ class Manager:
 
                 for strategy_class, params in strategies.items():
 
-                    timeframe = params['timeframe']
-                    amount  = params['amount']
-                    max_period  = params['max_period']
+                    timeframe = params["timeframe"]
+                    amount = params["amount"]
+                    max_period = params["max_period"]
 
-                    df = self.dataframe_helper.get(symbol, timeframe, limit = max_period)
+                    df = self.dataframe_helper.get(symbol, timeframe, limit=max_period)
 
-                    strategy = strategy_class(df=df,**params) 
+                    strategy = strategy_class(df=df, **params)
 
                     if strategy.should_buy():
                         strategy_name = strategy.__class__.__name__
-                        self.logger.info("Buy signal for %s using the %s strategy", symbol, strategy_name)
+                        self.logger.info(
+                            "Buy signal for %s using the %s strategy",
+                            symbol,
+                            strategy_name,
+                        )
 
                         self.futures_wallet.transfer_to_spot(amount=amount)
 
                         try:
                             price = df.close.iloc[-1]
                             quantity = round(amount / price, 3)
-                            self.logger.info("%s price: %s... Quantity to buy: %s.", symbol, price, quantity)
+                            self.logger.info(
+                                "%s price: %s... Quantity to buy: %s.",
+                                symbol,
+                                price,
+                                quantity,
+                            )
 
-                            self.spot_wallet.place_order(symbol=symbol, quantity=quantity)
-                        except Exception as error:
+                            self.spot_wallet.place_order(
+                                symbol=symbol, quantity=quantity
+                            )
+                        except Exception as error:  # pylint W0703
                             self.logger.error("There was a general error: %s", error)
 
-                        #TODO: Add coldown for that pair
+                        # TODO: Add coldown for that pair
                         break
-    
+
                 time.sleep(15)

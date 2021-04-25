@@ -20,13 +20,13 @@ class Spot(AbstractWallet):
         self.logger.info("Spot Balance in USDT is: %s", self.get_balance())
 
     def place_order(self, symbol, quantity):
+        """ Places a market order on the Spot wallet """
         try:
-            self.logger.debug('Placing an order for %s', symbol)
-            order = self.client.order_market_buy(
-                symbol=symbol,
-                quantity=quantity
+            self.logger.debug("Placing an order for %s", symbol)
+            order = self.client.order_market_buy(symbol=symbol, quantity=quantity)
+            self.logger.info(
+                "An order was placed of %s qty for %s.", str(quantity), symbol
             )
-            self.logger.info('An order was placed of %s qty for %s.', str(quantity), symbol)
-            self.logger.debug('The order: %s', order)
+            self.logger.debug("The order: %s", order)
         except BinanceAPIException as error:
-            self.logger.error('An API Exception occurred: %s', error)
+            self.logger.error("An API Exception occurred: %s", error)
