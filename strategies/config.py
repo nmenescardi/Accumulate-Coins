@@ -1,4 +1,4 @@
-from binance.enums import *
+from binance.enums import KLINE_INTERVAL_30MINUTE  # type: ignore
 from strategies.below_rsi import BelowRSI
 
 config = {

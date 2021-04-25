@@ -2,7 +2,7 @@
 
 from wallets.abstract_wallet import AbstractWallet
 
-from binance.exceptions import BinanceAPIException
+from binance.exceptions import BinanceAPIException  # type: ignore
 
 
 class Spot(AbstractWallet):
