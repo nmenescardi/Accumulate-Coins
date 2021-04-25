@@ -2,6 +2,7 @@ import time
 
 from client.client import Client
 from helpers.dataframe import Dataframe
+from helpers.trades import TradesHelper
 from logger.app_logger import AppLogger
 from strategies.config import config
 from wallets.futures import Futures as FuturesWallet
@@ -17,12 +18,19 @@ class Manager:
         self.spot_wallet = SpotWallet()
         self.dataframe_helper = Dataframe()
         self.logger = AppLogger().get()
+        self.trades_helper = TradesHelper()
 
     def run(self):
         """ Main entry point to handle the process """
 
         while True:
             for symbol, strategies in config.items():
+                time.sleep(15)
+
+                # Avoids re-buying same symbol in a short period of time
+                if self.trades_helper.is_cooling_down(symbol):
+                    continue  # to the next symbol
+                
                 self.logger.info("Running strategies for: %s", symbol)
                 self.dataframe_helper.flush_cache()
 
@@ -46,23 +54,21 @@ class Manager:
 
                         self.futures_wallet.transfer_to_spot(amount=amount)
 
-                        try:
-                            price = df.close.iloc[-1]
-                            quantity = round(amount / price, 3)
-                            self.logger.info(
-                                "%s price: %s... Quantity to buy: %s.",
-                                symbol,
-                                price,
-                                quantity,
-                            )
+                        price = df.close.iloc[-1]
+                        quantity = round(amount / price, 3)
+                        self.logger.info(
+                            "%s price: %s... Quantity to buy: %s.",
+                            symbol,
+                            price,
+                            quantity,
+                        )
 
-                            self.spot_wallet.place_order(
-                                symbol=symbol, quantity=quantity
-                            )
-                        except Exception as error:  # pylint W0703
-                            self.logger.error("There was a general error: %s", error)
+                        was_placed = self.spot_wallet.place_order(
+                            symbol=symbol, quantity=quantity
+                        )
 
-                        # TODO: Add coldown for that pair
-                        break
+                        if was_placed:
+                            self.trades_helper.add_trade(symbol)
 
+                        break # to the next symbol
                 time.sleep(15)

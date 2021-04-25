@@ -9,7 +9,7 @@ from logger.app_logger import AppLogger
 class AbstractStrategy(ABC):
     """ Abstract class to setup common dependencies between strategies """
 
-    def __init__(self, df, timeframe=KLINE_INTERVAL_1HOUR, amount=20):
+    def __init__(self, df, timeframe=KLINE_INTERVAL_1HOUR, amount=20, **kwargs):
         self.df = df
         self.timeframe = timeframe
         self.ammount = amount

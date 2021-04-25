@@ -28,5 +28,9 @@ class Spot(AbstractWallet):
                 "An order was placed of %s qty for %s.", str(quantity), symbol
             )
             self.logger.debug("The order: %s", order)
+            was_placed = True 
         except BinanceAPIException as error:
             self.logger.error("An API Exception occurred: %s", error)
+            was_placed = False
+
+        return was_placed 

@@ -23,6 +23,10 @@ class Settings:
             self.parser.add_argument(setting.pop("arg"), **setting)
         self.args = vars(self.parser.parse_args())
 
-    def get(self):
+    def get(self, setting_key = ''):
         """Public method to get the settings"""
+        
+        if setting_key:
+            return self.args[ setting_key ]
+
         return self.args
