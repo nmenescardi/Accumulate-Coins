@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from binance.enums import *
 import pandas_ta as ta
+from logger.app_logger import AppLogger
+
 
 class AbstractStrategy(ABC):
     
@@ -8,6 +10,7 @@ class AbstractStrategy(ABC):
         self.df = df
         self.timeframe = timeframe
         self.ammount = amount
+        self.logger = AppLogger().get()
 
     @abstractmethod
     def should_buy(self):

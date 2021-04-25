@@ -5,6 +5,7 @@ import numpy as np
 
 from client.client import Client
 from helpers.singleton import singleton
+from logger.app_logger import AppLogger
 
 
 @singleton
@@ -13,6 +14,7 @@ class Dataframe:
     def __init__(self):
         self.client = Client().get()
         self.cached_dataframes = {}
+        self.logger = AppLogger().get()
 
     def get(self, symbol, interval, limit = 499):        
         candles = self._fetch_candles(symbol=symbol, interval=interval, limit=limit)
@@ -43,12 +45,12 @@ class Dataframe:
         cache_key = symbol + interval + str(limit)
         
         if cache_key in self.cached_dataframes:
-            print('fetched from cache') #TODO: logger
+            self.logger.debug("%s Dataframe fetched from cache", cache_key)
             return self.cached_dataframes[ cache_key ]
 
         else:
             candles = self.client.get_klines(symbol=symbol, interval=interval, limit=limit)
-            print('fetched from client')
+            self.logger.debug("%s Dataframe fetched from a Client API call", cache_key)
             self.cached_dataframes[ cache_key ] = candles
             return candles
 
