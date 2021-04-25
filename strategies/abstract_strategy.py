@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
-from binance.enums import KLINE_INTERVAL_1HOUR # type: ignore
+
 import pandas_ta as ta  # type: ignore
+from binance.enums import KLINE_INTERVAL_1HOUR  # type: ignore
+
 from logger.app_logger import AppLogger
 
 

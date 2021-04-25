@@ -1,8 +1,8 @@
 """Spot wallet"""
 
-from wallets.abstract_wallet import AbstractWallet
-
 from binance.exceptions import BinanceAPIException  # type: ignore
+
+from wallets.abstract_wallet import AbstractWallet
 
 
 class Spot(AbstractWallet):

@@ -1,7 +1,7 @@
 
 
-import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
+import pandas as pd  # type: ignore
 
 from client.client import Client
 from helpers.singleton import singleton

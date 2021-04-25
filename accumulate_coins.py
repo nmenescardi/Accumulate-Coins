@@ -1,8 +1,8 @@
 """Script for transfering funds from the Binance futures wallets into spot and accumulate coins."""
 
+from strategies.manager import Manager as StrategiesManager
 from wallets.futures import Futures as FuturesWallet
 from wallets.spot import Spot as SpotWallet
-from strategies.manager import Manager as StrategiesManager
 
 
 class AccumulateCoins:
