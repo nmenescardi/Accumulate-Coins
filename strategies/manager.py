@@ -4,8 +4,8 @@ from client.client import Client
 from helpers.dataframe import Dataframe
 from helpers.trades import TradesHelper
 from logger.app_logger import AppLogger
-from strategies.config import config
 from settings.settings import Settings
+from strategies.config import config
 from wallets.futures import Futures as FuturesWallet
 from wallets.spot import Spot as SpotWallet
 
@@ -32,7 +32,7 @@ class Manager:
                 # Avoids re-buying same symbol in a short period of time
                 if self.trades_helper.is_cooling_down(symbol):
                     continue  # to the next symbol
-                
+
                 self.logger.info("Running strategies for: %s", symbol)
                 self.dataframe_helper.flush_cache()
 
@@ -70,6 +70,6 @@ class Manager:
                 if was_placed:
                     self.trades_helper.add_trade(symbol)
 
-                return # to evaluate the next symbol
+                return  # to evaluate the next symbol
 
             time.sleep(self.sleep_between_calls)

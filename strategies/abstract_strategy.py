@@ -1,3 +1,5 @@
+# pylint: disable=W0613
+
 from abc import ABC, abstractmethod
 
 import pandas_ta as ta  # type: ignore  # pylint: disable=E0401, W0611
