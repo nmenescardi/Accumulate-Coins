@@ -21,7 +21,6 @@ class AccumulateCoins:
         """Main entry point"""
         self._print_balance()
         self.strategies_manager.run()
-        self._print_balance()
 
 
 if __name__ == "__main__":
