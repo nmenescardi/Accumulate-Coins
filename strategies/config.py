@@ -6,19 +6,37 @@ config = {
     "BNBUSDT": {
         BelowRSI: {
             "period": 14,
-            "limit": 20,
+            "limit": 27,
             "timeframe": KLINE_INTERVAL_30MINUTE,
-            "amount": 20,
+            "amount": 25,
             "max_period": 15,  # Minimum amount of periods
         },
     },
     "BTCUSDT": {
         BelowRSI: {
             "period": 14,
-            "limit": 10,
+            "limit": 26,
             "timeframe": KLINE_INTERVAL_30MINUTE,
-            "amount": 20,
-            "max_period": 15,  # Minimum amount of periods
+            "amount": 25,
+            "max_period": 15,
+        },
+    },
+    "ETHUSDT": {
+        BelowRSI: {
+            "period": 14,
+            "limit": 24,
+            "timeframe": KLINE_INTERVAL_30MINUTE,
+            "amount": 15,
+            "max_period": 15,
+        },
+    },
+    "ADAUSDT": {
+        BelowRSI: {
+            "period": 14,
+            "limit": 26,
+            "timeframe": KLINE_INTERVAL_30MINUTE,
+            "amount": 15,
+            "max_period": 15,
         },
     },
 }
