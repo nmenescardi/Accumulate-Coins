@@ -27,16 +27,20 @@ class Manager:
 
         while True:
             for symbol, strategies in config.items():
-                time.sleep(self.sleep_between_calls)
+                try:
+                    time.sleep(self.sleep_between_calls)
 
-                # Avoids re-buying same symbol in a short period of time
-                if self.trades_helper.is_cooling_down(symbol):
-                    continue  # to the next symbol
+                    # Avoids re-buying same symbol in a short period of time
+                    if self.trades_helper.is_cooling_down(symbol):
+                        continue  # to the next symbol
 
-                self.logger.info("Running strategies for: %s", symbol)
-                self.dataframe_helper.flush_cache()
+                    self.logger.info("Running strategies for: %s", symbol)
+                    self.dataframe_helper.flush_cache()
 
-                self._evaluate_strategies(symbol, strategies)
+                    self._evaluate_strategies(symbol, strategies)
+                except Exception as error:
+                    self.logger.error("The following general error ocurred: %s", error)
+                    time.sleep(self.sleep_between_calls * 2)
 
     def _evaluate_strategies(self, symbol, strategies):
         for strategy_class, params in strategies.items():

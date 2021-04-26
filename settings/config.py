@@ -12,7 +12,7 @@ default_config = [
     {
         "arg": "--sleep",
         "type": int,
-        "default": 20,
+        "default": 35,
         "dest": "sleep_between_calls",
         "help": "Time in seconds to sleep between calls to the Binance API",
     },
