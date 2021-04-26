@@ -16,4 +16,11 @@ default_config = [
         "dest": "minutes_between_trades",
         "help": "It determine the amount of minutes that the trader should wait between trades of the same symbol",
     },
+    {
+        "arg": "--sleep",
+        "type": int,
+        "default": 20,
+        "dest": "sleep_between_calls",
+        "help": "Time in seconds to sleep between calls to the Binance API",
+    },
 ]

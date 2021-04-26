@@ -5,6 +5,7 @@ from helpers.dataframe import Dataframe
 from helpers.trades import TradesHelper
 from logger.app_logger import AppLogger
 from strategies.config import config
+from settings.settings import Settings
 from wallets.futures import Futures as FuturesWallet
 from wallets.spot import Spot as SpotWallet
 
@@ -19,13 +20,14 @@ class Manager:
         self.dataframe_helper = Dataframe()
         self.logger = AppLogger().get()
         self.trades_helper = TradesHelper()
+        self.sleep_between_calls = Settings().get("sleep_between_calls")
 
     def run(self):
         """ Main entry point to handle the process """
 
         while True:
             for symbol, strategies in config.items():
-                time.sleep(15)
+                time.sleep(self.sleep_between_calls)
 
                 # Avoids re-buying same symbol in a short period of time
                 if self.trades_helper.is_cooling_down(symbol):
@@ -71,4 +73,4 @@ class Manager:
                             self.trades_helper.add_trade(symbol)
 
                         break # to the next symbol
-                time.sleep(15)
+                time.sleep(self.sleep_between_calls)
