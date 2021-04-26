@@ -29,22 +29,25 @@ $ pip install pipenv
 ```
 
 <br/>
+
 API Key & Secret
-----------------
+------------
 Duplicate the `.env.example` file and rename it to `.env`. Place your Binance API key and secret in there.
 
 
 <br/>
+
 Virtual Environment
--------------------
+------------
 Start a new virtual environment:
 ```
 $ pipenv shell
 ```
 
 <br/>
+
 Install Dependencies
---------------------
+------------
 ```
 $ pipenv install
 ```
