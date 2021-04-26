@@ -75,3 +75,13 @@ class Dataframe:
     def flush_cache(self):
         """ Empty out the entire cache """
         self.cached_dataframes = {}
+
+    def get_quantity(self, df, amount):
+        price = df.close.iloc[-1]
+        quantity = round(amount / price, 3)
+        self.logger.info(
+            "price: %s... Quantity to buy: %s.",
+            price,
+            quantity,
+        )
+        return quantity

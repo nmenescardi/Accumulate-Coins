@@ -18,10 +18,10 @@ class Futures(AbstractWallet):
     def print_balance(self):
         self.logger.info("Futures Balance in USDT is: %s", self.get_balance())
 
-    def transfer_to_spot(self, amount=None):
+    def transfer_to_spot(self, amount):
         """Perfor a tx from futures to spot"""
 
-        amount = amount or self.settings["tx_amount"]
+        was_transfered = False
         self.logger.info("Amount to transfer %s", amount)
 
         if amount > self.get_balance():
@@ -32,5 +32,7 @@ class Futures(AbstractWallet):
                     asset="USDT", amount=amount, type=2
                 )
                 self.logger.info("Balance transfer succesful !!!")
+                was_transfered = True
             except BinanceAPIException as error:
                 self.logger.error("There was an API error: %s", error)
+        return was_transfered

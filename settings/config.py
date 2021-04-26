@@ -3,13 +3,6 @@
 
 default_config = [
     {
-        "arg": "--tx-amount",
-        "type": float,
-        "default": 0.003,
-        "dest": "tx_amount",
-        "help": "Amount to be transfer from Futures to spot",
-    },
-    {
         "arg": "--cooldown",
         "type": int,
         "default": 1440, # A day

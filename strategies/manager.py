@@ -36,41 +36,40 @@ class Manager:
                 self.logger.info("Running strategies for: %s", symbol)
                 self.dataframe_helper.flush_cache()
 
-                for strategy_class, params in strategies.items():
+                self._evaluate_strategies(symbol, strategies)
 
-                    timeframe = params["timeframe"]
-                    amount = params["amount"]
-                    max_period = params["max_period"]
+    def _evaluate_strategies(self, symbol, strategies):
+        for strategy_class, params in strategies.items():
 
-                    df = self.dataframe_helper.get(symbol, timeframe, limit=max_period)
+            timeframe = params["timeframe"]
+            amount = params["amount"]
+            max_period = params["max_period"]
 
-                    strategy = strategy_class(df=df, **params)
+            df = self.dataframe_helper.get(symbol, timeframe, limit=max_period)
 
-                    if strategy.should_buy():
-                        strategy_name = strategy.__class__.__name__
-                        self.logger.info(
-                            "Buy signal for %s using the %s strategy",
-                            symbol,
-                            strategy_name,
-                        )
+            strategy = strategy_class(df=df, **params)
 
-                        self.futures_wallet.transfer_to_spot(amount=amount)
+            if strategy.should_buy():
+                strategy_name = strategy.__class__.__name__
+                self.logger.info(
+                    "Buy signal for %s using the %s strategy",
+                    symbol,
+                    strategy_name,
+                )
 
-                        price = df.close.iloc[-1]
-                        quantity = round(amount / price, 3)
-                        self.logger.info(
-                            "%s price: %s... Quantity to buy: %s.",
-                            symbol,
-                            price,
-                            quantity,
-                        )
+                was_transfered = self.futures_wallet.transfer_to_spot(amount=amount)
+                if not was_transfered:
+                    return
 
-                        was_placed = self.spot_wallet.place_order(
-                            symbol=symbol, quantity=quantity
-                        )
+                quantity = self.dataframe_helper.get_quantity(df, amount)
 
-                        if was_placed:
-                            self.trades_helper.add_trade(symbol)
+                was_placed = self.spot_wallet.place_order(
+                    symbol=symbol, quantity=quantity
+                )
 
-                        break # to the next symbol
-                time.sleep(self.sleep_between_calls)
+                if was_placed:
+                    self.trades_helper.add_trade(symbol)
+
+                return # to evaluate the next symbol
+
+            time.sleep(self.sleep_between_calls)
