@@ -75,6 +75,7 @@ class Dataframe:
     def flush_cache(self):
         """ Empty out the entire cache """
         self.cached_dataframes = {}
+        self.logger.debug("The dataframe cache was emptied out")
 
     def get_quantity(self, df, amount):
         price = df.close.iloc[-1]
