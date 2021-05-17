@@ -61,9 +61,11 @@ class Manager:
                     strategy_name,
                 )
 
-                was_transfered = self.futures_wallet.transfer_to_spot(amount=amount)
-                if not was_transfered:
-                    return
+                #  if there is enough balance, skip the tx
+                if float(self.spot_wallet.get_balance()) < amount:
+                    was_transfered = self.futures_wallet.transfer_to_spot(amount=amount)
+                    if not was_transfered:
+                        return
 
                 quantity = self.dataframe_helper.get_quantity(df, amount)
 
