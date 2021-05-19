@@ -41,17 +41,22 @@ class Spot(AbstractWallet):
 
         self.logger.debug('getting quantity for %s', symbol)
         step_size = self._get_step_size(symbol=symbol)
+
+        base_fee = self.client.get_trade_fee(symbol=symbol)[0]['takerCommission'] or 0.001
+        fee = (100 - float(base_fee)) / 100
         
-        base_quantity = (amount / price) * 0.9995
+        base_quantity = (amount / price) * fee
         precision = int(round(-math.log(step_size, 10), 0))
         quantity = float(round(base_quantity, precision))
         
         self.logger.debug(
-            '%s final Quantity: %s... Precision: %s... Base Qty: %s... ', 
-            symbol, 
-            quantity, 
-            precision, 
-            base_quantity
+            '%s Final Qty: %s.. Precision: %s.. Base Qty: %s.. Base Fee: %s.. Fee: %s.. ',
+            symbol,
+            quantity,
+            precision,
+            base_quantity,
+            base_fee,
+            fee
         )
         return quantity
 
