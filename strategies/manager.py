@@ -62,10 +62,18 @@ class Manager:
                 )
 
                 #  if there is enough balance, skip the tx
-                if float(self.spot_wallet.get_balance()) < amount:
+                spot_balance = self.spot_wallet.get_balance()
+                if float(spot_balance) < amount:
+                    self.logger.info(
+                        "There is no enough spot balance to buy. Proceeding to transfer from futures"
+                    )
                     was_transfered = self.futures_wallet.transfer_to_spot(amount=amount)
                     if not was_transfered:
                         return
+                else:
+                    self.logger.info(
+                        "There is enough spot balance to buy. Skiping transfer from futures"
+                    )
 
                 quantity = self.dataframe_helper.get_quantity(df, amount)
 
