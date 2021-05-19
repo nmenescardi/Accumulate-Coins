@@ -75,7 +75,8 @@ class Manager:
                         "There is enough spot balance to buy. Skiping transfer from futures"
                     )
 
-                quantity = self.dataframe_helper.get_quantity(df, amount)
+                last_price = self.dataframe_helper.get_last_price(df)
+                quantity = self.spot_wallet.get_quantity(last_price, amount, symbol)
 
                 was_placed = self.spot_wallet.place_order(
                     symbol=symbol, quantity=quantity

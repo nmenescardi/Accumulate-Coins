@@ -4,6 +4,7 @@ from binance.exceptions import BinanceAPIException  # type: ignore
 
 from wallets.abstract_wallet import AbstractWallet
 
+import math
 
 class Spot(AbstractWallet):
     """Spot wallet"""
@@ -34,3 +35,33 @@ class Spot(AbstractWallet):
             was_placed = False
 
         return was_placed
+
+    def get_quantity(self, price, amount, symbol):
+        """ calculates quantity to buy based on last price and the given amount """
+
+        self.logger.debug('getting quantity for %s', symbol)
+        step_size = self._get_step_size(symbol=symbol)
+        
+        base_quantity = (amount / price) * 0.9995
+        precision = int(round(-math.log(step_size, 10), 0))
+        quantity = float(round(base_quantity, precision))
+        
+        self.logger.debug(
+            '%s final Quantity: %s... Precision: %s... Base Qty: %s... ', 
+            symbol, 
+            quantity, 
+            precision, 
+            base_quantity
+        )
+        return quantity
+
+    def _get_step_size(self, symbol):
+        step_size = self._get_from_symbol_info_filters(symbol, 'LOT_SIZE') or 0.0001
+        return float(step_size)
+
+    def _get_from_symbol_info_filters(self, symbol, filter_type):
+        sym_info = self.client.get_symbol_info(symbol)
+        filters = sym_info['filters']
+        for f in filters:
+            if f['filterType'] == filter_type:
+                return f['stepSize']

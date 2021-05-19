@@ -77,14 +77,6 @@ class Dataframe:
         self.cached_dataframes = {}
         self.logger.debug("The dataframe cache was emptied out")
 
-    def get_quantity(self, df, amount):
-        """ calculates quantity to buy based on last price and the given amount """
-
-        price = df.close.iloc[-1]
-        quantity = round(amount / price, 3)
-        self.logger.info(
-            "price: %s... Quantity to buy: %s.",
-            price,
-            quantity,
-        )
-        return quantity
+    def get_last_price(self, df):
+        """ returns last price """
+        return float(df.close.iloc[-1])
