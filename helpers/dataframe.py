@@ -52,11 +52,11 @@ class Dataframe:
             closetime.append(candle[6])
 
         df["open_time"] = opentime
-        df["open"] = np.array(lopen).astype(np.float)
-        df["high"] = np.array(lhigh).astype(np.float)
-        df["low"] = np.array(llow).astype(np.float)
-        df["close"] = np.array(lclose).astype(np.float)
-        df["volume"] = np.array(lvol).astype(np.float)
+        df["open"] = np.array(lopen).astype(np.float32)
+        df["high"] = np.array(lhigh).astype(np.float32)
+        df["low"] = np.array(llow).astype(np.float32)
+        df["close"] = np.array(lclose).astype(np.float32)
+        df["volume"] = np.array(lvol).astype(np.float32)
         df["close_time"] = closetime
         return df
 

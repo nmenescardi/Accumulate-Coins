@@ -65,14 +65,11 @@ class Manager:
                 spot_balance = self.spot_wallet.get_balance()
                 if float(spot_balance) < amount:
                     self.logger.info(
-                        "There is no enough spot balance to buy. Proceeding to transfer from futures"
+                        "There is no enough spot balance to buy"
                     )
-                    was_transfered = self.futures_wallet.transfer_to_spot(amount=amount)
-                    if not was_transfered:
-                        return
                 else:
                     self.logger.info(
-                        "There is enough spot balance to buy. Skiping transfer from futures"
+                        "There is enough spot balance to buy."
                     )
 
                 last_price = self.dataframe_helper.get_last_price(df)
