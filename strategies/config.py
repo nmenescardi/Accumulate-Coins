@@ -71,7 +71,7 @@ config = {
     "LINKUSDT": {
         BelowRSI: {
             "period": 30,
-            "limit": 26
+            "limit": 26,
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 35,
@@ -80,7 +80,7 @@ config = {
     "MATICUSDT": {
         BelowRSI: {
             "period": 30,
-            "limit": 26
+            "limit": 26,
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 35,
@@ -89,7 +89,7 @@ config = {
     "QTUMUSDT": {
         BelowRSI: {
             "period": 30,
-            "limit": 26
+            "limit": 26,
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 5 * factor,
             "max_period": 35,
@@ -134,7 +134,7 @@ config = {
     "TRXUSDT": {
         BelowRSI: {
             "period": 30,
-            "limit": 26
+            "limit": 26,
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 35,
