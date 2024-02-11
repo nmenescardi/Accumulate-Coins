@@ -5,16 +5,6 @@ from strategies.below_rsi import BelowRSI
 factor = 1
 
 config = {
-    "BNBUSDT": {
-        BelowRSI: {
-            "period": 30,
-            "limit": 26,
-            "timeframe": KLINE_INTERVAL_1HOUR,
-            "amount": 25 * factor,
-            "max_period": 31,
-            "limit_price_percentage": 0.02, # 2 percent
-        },
-    },
     "BTCUSDT": {
         BelowRSI: {
             "period": 30,
@@ -23,6 +13,16 @@ config = {
             "amount": 500 * factor,
             "max_period": 31,
             "limit_price_percentage": 0.02,
+        },
+    },
+    "BNBUSDT": {
+        BelowRSI: {
+            "period": 30,
+            "limit": 26,
+            "timeframe": KLINE_INTERVAL_1HOUR,
+            "amount": 25 * factor,
+            "max_period": 31,
+            "limit_price_percentage": 0.02, # 2 percent
         },
     },
     "ETHUSDT": {

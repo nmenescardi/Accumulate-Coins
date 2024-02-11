@@ -48,6 +48,7 @@ class Manager:
             timeframe = params["timeframe"]
             amount = params["amount"]
             max_period = params["max_period"]
+            limit_price_percentage = params["limit_price_percentage"]
 
             df = self.dataframe_helper.get(symbol, timeframe, limit=max_period)
 
@@ -76,7 +77,7 @@ class Manager:
                 quantity = self.spot_wallet.get_quantity(last_price, amount, symbol)
 
                 was_placed = self.spot_wallet.place_order(
-                    symbol=symbol, quantity=quantity
+                    symbol=symbol, quantity=quantity, limit_price_percentage=limit_price_percentage
                 )
 
                 if was_placed:

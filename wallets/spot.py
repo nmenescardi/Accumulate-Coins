@@ -20,11 +20,40 @@ class Spot(AbstractWallet):
     def print_balance(self):
         self.logger.info("Spot Balance in USDT is: %s", self.get_balance())
 
-    def place_order(self, symbol, quantity):
+    def place_order(self, symbol, quantity, limit_price_percentage = 0.02):
         """ Places a market order on the Spot wallet """
         try:
-            self.logger.debug("Placing an order for %s", symbol)
-            order = self.client.order_market_buy(symbol=symbol, quantity=quantity)
+            # Old market order
+            # order = self.client.order_market_buy(symbol=symbol, quantity=quantity)
+
+            current_price = float(self.client.get_symbol_ticker(symbol=symbol)["price"])
+            self.logger.info("Current %s price: %s", symbol, str(current_price))    
+
+            # Calculate limit price as limit_price_percentage below the current price
+            limit_price = current_price * (1 - limit_price_percentage)
+            self.logger.debug("Placing a limit order for %s at price %s", symbol, limit_price)
+
+            # Fetch the symbol info to adjust limit price according to the PRICE_FILTER
+            symbol_info = self.client.get_symbol_info(symbol)
+            price_filter = next(filter(lambda f: f['filterType'] == 'PRICE_FILTER', symbol_info['filters']), None)
+            if price_filter:
+                tick_size = float(price_filter['tickSize'])
+                limit_price = math.floor(limit_price / tick_size) * tick_size  # Adjust limit price to comply with tick size
+
+            self.logger.debug("Placing a limit order for %s at price %s", symbol, limit_price)
+
+            order = self.client.order_limit_buy(
+                symbol=symbol,
+                quantity=quantity,
+                price='{:.8f}'.format(limit_price)  # Format price to match exchange's requirements
+            )
+
+            # order = self.client.order_limit_buy(
+            #     symbol=symbol,
+            #     quantity=quantity,
+            #     price='{:.8f}'.format(limit_price)  # Format price to match exchange's requirements
+            # )
+            
             self.logger.info(
                 "An order was placed of %s qty for %s.", str(quantity), symbol
             )
