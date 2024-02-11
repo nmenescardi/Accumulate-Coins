@@ -5,3 +5,4 @@
 /old_scripts
 local-workflow.sh
 test__*.py
+nohup.out

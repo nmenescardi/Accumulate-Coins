@@ -12,6 +12,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02, # 2 percent
         },
     },
     "BTCUSDT": {
@@ -21,6 +22,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 500 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     "ETHUSDT": {
@@ -30,6 +32,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 300 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     "ADAUSDT": {
@@ -39,6 +42,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     # "ATOMUSDT": {
@@ -48,6 +52,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 25 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     "DOTUSDT": {
@@ -57,6 +62,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     # "FTMUSDT": {
@@ -66,6 +72,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 25 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     "LINKUSDT": {
@@ -73,8 +80,9 @@ config = {
             "period": 30,
             "limit": 31,
             "timeframe": KLINE_INTERVAL_1HOUR,
-            "amount": 50 * factor,
+            "amount": 100 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     "MATICUSDT": {
@@ -82,8 +90,9 @@ config = {
             "period": 30,
             "limit": 29,
             "timeframe": KLINE_INTERVAL_1HOUR,
-            "amount": 25 * factor,
+            "amount": 50 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     "SOLUSDT": {
@@ -91,8 +100,9 @@ config = {
             "period": 30,
             "limit": 29,
             "timeframe": KLINE_INTERVAL_1HOUR,
-            "amount": 25 * factor,
+            "amount": 100 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     # "QTUMUSDT": {
@@ -102,6 +112,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 5 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     # "UNIUSDT": {
@@ -111,6 +122,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 5 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     # "VETUSDT": {
@@ -120,6 +132,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 25 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     "XRPUSDT": {
@@ -129,6 +142,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 50 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
     # "ZRXUSDT": {
@@ -138,6 +152,7 @@ config = {
     #         "timeframe": KLINE_INTERVAL_1HOUR,
     #         "amount": 25 * factor,
     #         "max_period": 31,
+    #         "limit_price_percentage": 0.02,
     #     },
     # },
     "TRXUSDT": {
@@ -147,15 +162,7 @@ config = {
             "timeframe": KLINE_INTERVAL_1HOUR,
             "amount": 25 * factor,
             "max_period": 31,
+            "limit_price_percentage": 0.02,
         },
     },
-    # "RENUSDT": {
-    #     BelowRSI: {
-    #         "period": 30,
-    #         "limit": 24,
-    #         "timeframe": KLINE_INTERVAL_1HOUR,
-    #         "amount": 10 * factor,
-    #         "max_period": 31,
-    #     },
-    # },
 }
