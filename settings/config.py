@@ -5,7 +5,7 @@ default_config = [
     {
         "arg": "--cooldown",
         "type": int,
-        "default": 4320,  # three days
+        "default": 720,  # half day... Older: 4320, # three days
         "dest": "minutes_between_trades",
         "help": "It determine the amount of minutes that the trader should wait between trades of the same symbol",
     },
